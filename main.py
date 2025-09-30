@@ -1,9 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 
-for count in range(1, 2):
+from time import sleep
+headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
+
+for count in range(1, 51):
+    sleep(2)
     url = f'https://books.toscrape.com/catalogue/page-{count}.html'
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
 
     soup = BeautifulSoup(response.text, 'lxml')
 
