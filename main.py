@@ -4,6 +4,13 @@ from bs4 import BeautifulSoup
 from time import sleep
 headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
 
+def download(url):
+    resp = requests.get(url, headers=headers, stream=True)
+    r = open('/Users/sergeygirev/Desktop/images/' + url.split('/')[-1], 'wb')
+    for value in resp.iter_content(1024*1024):
+        r.write(value)
+    r.close()
+    
 def get_url():
     for count in range(1, 2):
         url = f'https://books.toscrape.com/catalogue/page-{count}.html'
@@ -25,10 +32,11 @@ def get_url():
 def array():       
     for card_url in get_url():
         response = requests.get(card_url, headers=headers)
-        sleep(3)
+        sleep(1)
         soup = BeautifulSoup(response.text, 'lxml')
         data = soup.find('div', class_='col-sm-6 product_main')
         name = data.find('h1').text
         price = data.find('p', class_='price_color').text.replace('Â',  '')
         url_img = 'https://books.toscrape.com/' + soup.find('img')['src'].replace('../../', '')
+        download(url_img)
         yield name, price, url_img
