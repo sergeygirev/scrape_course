@@ -11,10 +11,10 @@ def writer(parametr):
     page.set_column('B:B', 50)
     page.set_column('C:C', 100) 
     
-    for item in parametr():
-        page.write(row, coloumn, item['name'])
-        page.write(row, coloumn + 1, item['price'])
-        page.write(row, coloumn + 2, item['url_img'])
+    for item in parametr:
+        page.write(row, coloumn, item[0])
+        page.write(row, coloumn + 1, item[1])
+        page.write(row, coloumn + 2, item[2])
         row += 1
     
     book.close()
