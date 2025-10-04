@@ -8,3 +8,12 @@ work.get('https://quotes.toscrape.com', headers=headers)
 response = work.get('https://quotes.toscrape.com/login', headers=headers)
 soup = BeautifulSoup(response.text, 'lxml')
 token = soup.find('form').find('input').get('value')
+data = { 'csrf_token': token, 'username': 'admin', 'password': 'admin' }
+result = work.post('https://quotes.toscrape.com/login', data=data, headers=headers, allow_redirects=True)
+
+result = soup.find_all('span', class_='text')
+author = soup.find_all('small', class_='author')
+    if len(result) != 0:
+        
+    else:
+        break
